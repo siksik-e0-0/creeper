@@ -25,15 +25,19 @@
     #ui-top {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 48px;
-      background: rgba(0,0,0,0.85);
-      border-bottom: 1px solid #00ff41;
+      height: 36px;
+      background: rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(0,255,65,0.25);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0 10px;
       z-index: 10;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: opacity 0.3s;
     }
+    #ui-top:hover { background: rgba(0,0,0,0.8); }
 
     #title {
       font-size: 15px;
@@ -71,15 +75,23 @@
     #canvas {
       display: block;
       cursor: none;
-      margin-top: 48px;
+      margin-top: 36px;
     }
 
     #ui-bottom {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.92);
-      border-top: 1px solid #00ff41;
+      background: rgba(0,0,0,0.55);
+      border-top: 1px solid rgba(0,255,65,0.2);
       z-index: 10;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    #ui-bottom:hover {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      background: rgba(0,0,0,0.9);
     }
 
     #chat-log {
@@ -173,7 +185,7 @@
     }
 
     #overlay {
-      display: none;
+      display: flex;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.9);
@@ -183,8 +195,11 @@
       flex-direction: column;
       gap: 16px;
       padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
     }
-    #overlay.show { display: flex; }
+    #overlay.show { opacity: 1; pointer-events: auto; }
     #overlay h1 {
       font-size: 22px;
       color: #00ff41;
@@ -216,7 +231,7 @@
     #overlay button:active { background: #004400; }
 
     #gameover {
-      display: none;
+      display: flex;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.93);
@@ -226,10 +241,13 @@
       flex-direction: column;
       gap: 14px;
       padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    #gameover.show { display: flex; }
+    #gameover.show { opacity: 1; pointer-events: auto; }
 
     @keyframes goFlicker {
       0%,100% { opacity:1; } 48%,52% { opacity:0.3; }
@@ -378,7 +396,7 @@
 
     /* ── 인트로 서사 오버레이 ── */
     #intro-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: #000;
@@ -389,7 +407,7 @@
       gap: 0;
       padding: 32px 24px;
     }
-    #intro-overlay.show { display: flex; }
+    #intro-overlay.show { opacity: 1; pointer-events: auto; }
 
     @keyframes introFadeIn {
       from { opacity: 0; transform: translateY(12px); }
@@ -443,7 +461,7 @@
 
     /* ── 퀴즈 오버레이 ── */
     #quiz-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.97);
@@ -454,7 +472,7 @@
       gap: 16px;
       padding: 24px;
     }
-    #quiz-overlay.show { display: flex; }
+    #quiz-overlay.show { opacity: 1; pointer-events: auto; }
     #quiz-title {
       font-size: 13px;
       color: #ffaa00;
@@ -534,7 +552,7 @@
     #quiz-give-up:hover { color: #ff2200; border-color: #ff2200; }
 
     #stageclear {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.82);
@@ -544,7 +562,7 @@
       flex-direction: column;
       gap: 12px;
     }
-    #stageclear.show { display: flex; }
+    #stageclear.show { opacity: 1; pointer-events: auto; }
     @keyframes scPulse {
       0%,100% { transform: scale(1); opacity: 1; }
       50%      { transform: scale(1.06); opacity: 0.85; }
@@ -574,7 +592,7 @@
 
     /* ── 캐릭터명 입력 화면 ── */
     #name-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.96);
@@ -585,7 +603,7 @@
       gap: 18px;
       padding: 24px;
     }
-    #name-overlay.show { display: flex; }
+    #name-overlay.show { opacity: 1; pointer-events: auto; }
     #name-overlay h2 {
       font-size: 20px;
       color: #00ff41;
@@ -637,7 +655,7 @@
 
     /* ── Top 10 순위 오버레이 ── */
     #ranking-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.97);
@@ -650,7 +668,7 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    #ranking-overlay.show { display: flex; }
+    #ranking-overlay.show { opacity: 1; pointer-events: auto; }
     #ranking-overlay h2 {
       font-size: 22px;
       color: #ffaa00;
@@ -800,7 +818,7 @@
 
     /* ── 스킬 레벨업 오버레이 ── */
     #skilllevel-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.95);
@@ -811,7 +829,7 @@
       gap: 14px;
       padding: 20px;
     }
-    #skilllevel-overlay.show { display: flex; }
+    #skilllevel-overlay.show { opacity: 1; pointer-events: auto; }
     #skilllevel-overlay h2 {
       font-size: 20px;
       color: #ffaa00;
@@ -864,7 +882,7 @@
 
     /* ── 스킬 트리 보기 오버레이 ── */
     #skilltree-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.97);
@@ -877,7 +895,7 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    #skilltree-overlay.show { display: flex; }
+    #skilltree-overlay.show { opacity: 1; pointer-events: auto; }
     #skilltree-overlay h2 {
       font-size: 18px;
       color: #00ff41;
@@ -982,7 +1000,7 @@
 
     /* ── 멀티 대기실 오버레이 ── */
     #multi-lobby-overlay {
-      display: none;
+      display: flex; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0, 0, 0, 0.97);
@@ -993,7 +1011,7 @@
       gap: 16px;
       padding: 24px;
     }
-    #multi-lobby-overlay.show { display: flex; }
+    #multi-lobby-overlay.show { opacity: 1; pointer-events: auto; }
 
     #multi-lobby-overlay h2 {
       font-size: 20px;

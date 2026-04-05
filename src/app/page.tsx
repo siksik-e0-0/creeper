@@ -5,8 +5,10 @@ import { GAME_HTML } from '@/components/gameHtml'
 import { GAME_JS }   from '@/components/gameJs'
 
 // 빌드 시점 버전 — Vercel 배포마다 자동 갱신
-const BUILD_DATE = new Date().toISOString().slice(0, 10).replace(/-/g, '.')
-const VERSION    = `v1.7.0 (${BUILD_DATE})`
+const _now       = new Date()
+const BUILD_DATE = _now.toISOString().slice(0, 10).replace(/-/g, '.')
+const BUILD_TIME = _now.toISOString().slice(11, 16)  // HH:MM (UTC)
+const VERSION    = `v2.1.0 (${BUILD_DATE} ${BUILD_TIME})`
 
 // 모듈 레벨 플래그 — StrictMode 이중 실행 완전 차단
 let _gameBooted = false
